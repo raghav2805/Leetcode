@@ -1,0 +1,38 @@
+class Solution {
+public:
+    int countLargestGroup(int n) {
+        if(n <=9) {
+            return n;
+        }
+
+        map<int,int> mpp;
+        for(int i=1;i<=n;i++) {
+            string val = to_string(i);
+            int smm = 0;
+            for(int j=0;j<val.size();j++) {
+                smm += val[j] - '0';
+            }
+            mpp[smm]++;
+        }
+
+
+        int ans = 1, lar_cnt = 0, temp = 0;
+        for(auto x: mpp) {
+            if (lar_cnt == x.second) {
+                temp++;
+                if (temp > ans) {
+                    ans = temp;
+                }
+            }
+            else {
+                temp = 1;
+                if (lar_cnt < x.second){
+                    lar_cnt = x.second;
+                    ans = 1;
+                }
+            }
+        }
+
+        return ans;
+    }
+};
