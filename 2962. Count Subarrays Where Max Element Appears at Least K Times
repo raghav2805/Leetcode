@@ -1,0 +1,50 @@
+class Solution {
+public:
+    long long countSubarrays(vector<int>& nums, int k) {
+        int n = nums.size();
+        if (n < k) {
+            return 0;
+        }
+
+        int max_val = 0;
+        for(int i=0;i<n;i++) {
+            if (max_val < nums[i]) {
+                max_val = nums[i];
+            }
+        }
+
+        int i=0,j=0,cnt=0;
+        long long ans = 0;
+        while(j<n) {
+            if(nums[j] == max_val) {
+                cnt++;
+            }
+            j++;
+            if (cnt == k) {
+                break;
+            }
+        }
+
+        while(i<=j) {
+            if (cnt >= k) {
+                ans += n-j+1;
+                if (i < n && nums[i] == max_val) {
+                    cnt--;
+                }
+                i++;
+            }
+            else {
+                if(j < n && nums[j] == max_val) {
+                    cnt++;
+                }
+                if (j<n)
+                    j++;
+            }
+            if (j == n && cnt < k) {
+                break;
+            }
+        }
+
+        return ans;
+    }
+};
